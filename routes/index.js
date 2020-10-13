@@ -44,7 +44,7 @@ router.post("/register", function(req, res){
                         // when the user successfully signs up, log the user in (.authenticate) and redirect to the campgrounds page
                         passport.authenticate("local")(req, res, function(){
                             console.log(`registration successful: ${user.username} logged in.`);
-                            req.flash("success", `Welcome to Yelpcamp, ${user.username}. Registration successful.`);
+                            req.flash("success", `Welcome to Nature Spots, ${user.username}. Registration successful.`);
                             res.redirect("/campgrounds");
                         });                        
                     });

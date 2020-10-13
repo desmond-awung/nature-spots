@@ -1,5 +1,4 @@
-// Yelpcamp v5: - Adding a sidebar to the show template
-//              - Style display of comments 
+// nature_spots
 
 // to start a MongoDB service/daemon: $ brew services start mongodb-community@4.4
 // to stop the service: $ brew services stop mongodb-community@4.4
@@ -13,8 +12,7 @@ const   express     = require("express"),
         mongoose    = require("mongoose"),
         passport    = require("passport"),
         LocalStrategy = require("passport-local"),
-        methodOverride = require("method-override"),
-        seedDB      = require("./seeds")        // make sure the last one has no comma :)
+        methodOverride = require("method-override")
  
 // requiring routes
 const campgroundRoutes  = require("./routes/campgrounds"),
@@ -22,12 +20,12 @@ const campgroundRoutes  = require("./routes/campgrounds"),
       indexRoutes       = require("./routes/index")
 
 // init mongoose for MongoDB
-// should this be "mongodb://localhost:27017/yelp_camp" instead (as per mongoodes docs?)
-mongoose.connect("mongodb://localhost/yelp_camp_v13", {
+// should this be "mongodb://localhost:27017/nature_spots" instead (as per mongoodes docs?)
+mongoose.connect("mongodb://localhost/nature_spots", {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
-.then(() => console.log("Connected to the Yelpcamp v13 DB"))
+.then(() => console.log("Connected to the Nature Spots DB"))
 .catch(error => console.log(error.message));
 
 // Make Mongoose use `findOneAndUpdate()`. Note that this option is `true`
@@ -90,6 +88,6 @@ app.use( "/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 
 // start server
-app.listen(port, () => {
-    console.log(`YelpCamp started at port: ${port}`);
+app.listen(process.env.port || port, () => {
+    console.log(`Nature-Spots started at port: ${port}`);
 })
