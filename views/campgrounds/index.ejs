@@ -1,0 +1,57 @@
+<!-- Campgrounds page: contains all campgrounds info -->
+
+<!-- header -->
+<%- include("../partials/header")  %> 
+
+
+<!-- BS3 container gives space on the sides  -->
+<div class="container">
+    
+    <header class="jumbotron">
+        <div class="container"> <!-- meeh. helps a little bit, not much of a difference -->
+
+            <!-- header works same as a div, but has more semantic meaning -->
+            <h1>Welcome to Yelpcamp</h1>
+            <p>View our amazing campgrounds from all over Texas</p>
+            <p>
+                <!-- Link to add a new campgroud -->
+                <a class="btn btn-primary btn-lg" href="/campgrounds/new">Add a new campground</a>
+            </p>
+        </div>
+    </header>
+    
+    <!-- grid for all camps -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Our most Popular Campgrounds</h3>
+
+        </div>
+    </div>
+
+    <div class="row" style="display:flex; flex-wrap: wrap;">
+
+        <!-- loop through array camps and display each campground's info -->
+        <% camps.forEach(campground => { %>
+            <div class="col-md-3 col-sm-6"> <!-- adds responsiveness-->
+                <div class="thumbnail">
+                    <!-- We need " " quotes around the src attribute, not just empty text, which ejs passes along. We don't want src=http://...  -->
+                    <!-- looks kinda weird right? -->
+                    <img src="<%= campground.image %>" alt="camp image"> 
+                    <div class="caption">
+                        <h4 class="text-center"> <%= campground.name  %> </h4>
+                    </div>
+                    <p>
+                        <!-- Get campground id from MongoDB's _id param. the _id key for each document is always unique! -->
+                        <a href="/campgrounds/<%= campground._id %>" class="btn btn-primary">More Info </a>
+                    </p>
+                </div>
+                <!-- <hr> -->
+            </div> 
+            
+        <% }); %>
+            
+            
+    </div>
+</div>
+<!-- footer -->
+<%- include("../partials/footer") %> 

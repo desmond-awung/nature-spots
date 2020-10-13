@@ -1,0 +1,108 @@
+<%- include("../partials/header") %> 
+
+<div class="container">
+    <div class="row">
+        <!-- sidebar: 3/12 grid -->
+        <div class="col-md-3">
+            <p class=lead>
+                Yelpcamp
+            </p>
+
+            <div class="list-group">
+                <li href="#" class="list-group-item active">Category 1</li>
+                <li href="#" class="list-group-item">Category 2</li>
+                <li href="#" class="list-group-item">Category 3</li>
+            </div>
+            <!-- MAP will go here -->
+        </div>
+
+
+        <!-- campground info: 9/12 grid -->
+        <div class="col-md-9">
+            <div class="thumbnail show-thumbnail">
+    
+                <!-- <h1> This is the show template</h1>
+    
+                <p>Description: </p> -->
+    
+                <img class="img-responsive" src="<%= campground.image  %> " alt="image of the <%= campground.name %> ">
+
+                <div class="caption-full show-camp-info">
+                    <h4 class="pull-right"> $<%= campground.price %>/night </h4>   <!-- inline element that aligns to the right -->
+                    <h4> 
+                        <a href="#"><%= campground.name %> </a>
+                    </h4>    <!-- automatically aligns to the left-->
+                    <p> <%= campground.description %> </p>
+                    <p> 
+                        <em>
+                            Sumbitted by <%= campground.author.username %> 
+                        </em> 
+                    </p>
+
+                    <!-- display the Edit and Delete Campgrround buttons only if the logged in user owns the current campground on this show page -->
+                    <!-- res.locals.currentUser in app.js gives us access to the req.user -->
+                    <!-- make sure to first verify that currentUser is not undefined - in case there is no one logged in -->
+                    <% if (currentUser && campground.author.id.equals(currentUser._id)) { %>
+
+                        <!-- button to the Edit route (show form) -->
+                        <a class="btn btn-sm btn-warning" href="/campgrounds/<%= campground._id %>/edit"> Edit </a>
+                    
+                        <!-- form to delete this route -->
+                        <form id="campround-delete-form" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST">
+                           <button class="btn btn-sm btn-danger"> Delete </button>
+                        </form>
+                    <% } %>
+                    
+                </div>
+
+
+            </div> <!-- thumbnail-->
+
+            <div class="well">  <!-- gives us nice inset grey backgroun-->
+                <div class="text-right">    <!-- BLOCK element that aligns to the right -->
+                    <a class="btn btn-success" href="/campgrounds/<%= campground._id %>/comments/new"> Add New Comment </a>
+                </div>
+                <hr>
+    
+                <!-- <h4>Comments</h4> -->
+    
+                <% campground.comments.forEach(comment => { %>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <strong><%= comment.author.username %></strong>
+                            <span class="pull-right"> 10 days ago </span>
+                            <p>
+                                <%= comment.content %>
+                            </p>
+
+                            <!-- display the Edit and Delete Comment buttons only if the logged in user owns the current comment on this show page -->
+                            <!-- res.locals.currentUser in app.js gives us access to the req.user -->
+                            <!-- make sure to first verify that currentUser is not undefined - in case there is no one logged in -->
+                            <% if (currentUser && comment.author.id.equals(currentUser._id)) { %>
+                             
+                                <!-- link to form template to edit the comment: /campgrounds/:id/comments/:comment_id/edit -->
+                                <a class="btn btn-xs btn-warning" 
+                                href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit">Edit</a>
+                                
+                                <!-- form to delete the form - using method override -->
+                                <form id="comment-delete-form" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                                    <input class="btn btn-xs btn-danger" type="submit" value="Delete">
+                                </form>
+
+                            <% } %>
+
+                        </div>
+                    </div>
+                    <!-- <hr> -->
+                
+                <% }) %>
+            </div>
+
+        </div> <!-- grid: col-md-9 -->
+
+    </div>
+
+</div>
+
+<%- include("../partials/footer") %> 

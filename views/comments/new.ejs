@@ -1,0 +1,33 @@
+<!-- New Comment Form -->
+<%- include("../partials/header")%>
+
+
+<div class="container">
+    <h1 class="text-center"> Add a new Comment to <%= campground.name %> </h1> <!-- we could also do: <h1 style="text-align: center;" > same as BS3 class="text-center" -->
+    <div class="row">
+        <!-- don't use grid here: <div class="col-xs-3"> this does not work! -->
+        <div style="width: 30%; margin: 30px auto;">    
+
+            <!-- action: points to "/campgrounds/:id/comments", REST format -->
+            <form action = "/campgrounds/<%= campground._id %>/comments" method ="POST">
+
+                <div class="form-group">    <!-- adds margin below the input elt-->
+                    <!-- <input class="form-control" type="text" placeholder="start your comment" name ="comment[content]">  -->
+                    <!-- for placeholder to appear, make sure there is NO whitespace between the <textarea></textarea> tags -->
+                    <textarea class="form-control" placeholder="start your comment" name="comment[content]" cols="30" rows="10"></textarea>
+                </div>
+                <div class="form-group">
+                    <!-- btn-block ==> makes btn into block element -->
+                    <button class="btn btn-lg btn-primary btn-block"> Submit </button>
+                </div>
+    
+            </form>
+            
+            <!-- BS3 makes it so easy to have <a> tags as buttons -->
+            <a class=" btn btn-default" href="/campgrounds"> See All Campgrounds </a>
+        </div>
+    </div>
+</div>
+
+
+<%- include("../partials/footer")%>

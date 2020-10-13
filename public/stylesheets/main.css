@@ -1,0 +1,21 @@
+
+/* affects the caption-full class in the showw template  */
+.thumbnail .caption-full {
+/* div.show-camp-info  { */
+    padding: 1.5em 1.5em;
+}
+
+/* All image tags in thumbnails */
+.thumbnail img {
+    width: 100%;
+}
+
+/* this affects only the thumbnail in the show template  */
+.thumbnail.show-thumbnail{
+    padding: 0 0;
+}
+
+/* Delete button on the Campground Show template */
+#campround-delete-form, #comment-delete-form {
+    display: inline;
+}

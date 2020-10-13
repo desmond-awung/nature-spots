@@ -1,0 +1,54 @@
+<!-- Landing page / home page -->
+
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Yelpcamp</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- Landing page header is different from the rest of the app -->
+        <link rel="stylesheet" href="/stylesheets/landing.css">
+        <!-- script: omiiting MIME type, per HTML5 docs -->
+        <!-- modernizr: makes our page more cross-browser compatible -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" async></script>
+    </head>
+</html>
+
+<body>
+    
+    <div class="container">
+        <!-- display flash messages, if available -->
+
+        <% if (error && error.length > 0) { %>
+            <% console.log(error, typeof(error)) %>
+            <!-- error flash messages -->
+            <div class="alert alert-danger" role="alert">
+                <%= error %> 
+            </div>
+    
+        <% } else if (success && success.length > 0) { %>
+            <% console.log(success, typeof(success)) %>
+            <!-- success flash messages -->
+            <div class="alert alert-success" role="alert">
+                <%= success %>
+            </div>
+        <% } %>
+    </div>
+
+    <div id="landing-header">
+        <h1>YelpCamp Landing Page!</h1>
+        <!-- link to index page -->
+        <a href="/campgrounds" class="btn btn-lg btn-success">View All Campgrounds</a>
+    </div>
+
+    <!-- slideshow: we attach each background image to each of these list items: these are going to be cross-fading into one another to create the slideshow effect -->
+    <ul class="slideshow">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+
+<%- include("partials/footer") %>

@@ -1,0 +1,71 @@
+<!-- Header file for all pages in app -->
+<!DOCTYPE html>
+    <head>
+        <title>YelCamp</title>
+        <!-- include bootstrap css - minified version - use CDN -->
+        <!-- formerly: <link rel="stylesheet" href="/bootstrap-3.3.7-dist/css/bootstrap.min.css"> -->
+        <link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- custom css -->
+        <link rel="stylesheet" href="/stylesheets/main.css">
+    </head>
+
+    <body>
+        <!-- navbar -->
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <!-- <button type="button" class="navbar-toggle collapsed"> -->
+                        <a class="navbar-brand" href="/"> YelpCamp</a>
+                        <!-- </button> -->
+                </div>
+
+                <div class="collapse navbar-collapse">
+
+                    <ul class="nav navbar-nav">
+                        <li class="active"> 
+                            <a href="/campgrounds/">See all Campgrounds</a>
+                        </li>                        
+                    </ul>
+
+                    <!-- right hand side: collapses when screen size is reduced to a pt  -->
+                    <ul class="nav navbar-nav navbar-right">
+                        <% if (!currentUser) { %>   <!-- currentUser object is undefined -->
+
+                            <li> <a href="/login">Login</a></li>
+                            <li> <a href="/register">Sign Up</a></li>
+
+                        <% } else { %>
+                            <li> <a href="#"> Signed in as <%= currentUser.username %> </a> </li> <!-- link to profile page?-->
+                            <li> <a href="/logout">Logout</a></li>
+                        <% } %>
+                    </ul>
+
+                </div >
+            </div>
+            
+        </nav>
+
+        <!-- Alert Flash messages  -->
+        <div class="container">
+            <!-- error and success are of type array object. They always exist as long as we defined them in res.locals... they are never undefined. So we can't just have if(error){...} cuz even an empty array evaluates to True. We actually need both conditions in the if statement 
+                - first condition of the if statement checks to make sure error and success are defined.
+                - second condition: we actually have an error or sucess msg to display only when this array has something in it: i.e. length > 0. This array looks like this: [ 'Please Login First' ] -->
+                
+            <% if (error && error.length > 0) { %>
+                <% console.log(error, typeof(error)) %>
+                <!-- error flash messages -->
+                <div class="alert alert-danger" role="alert">
+                    <%= error %> 
+                </div>
+
+            <% } else if (success && success.length > 0) { %>
+                <% console.log(success, typeof(success)) %>
+                <!-- success flash messages -->
+                <div class="alert alert-success" role="alert">
+                    <%= success %>
+                </div>
+            <% } %>
+
+
+        </div>
+        
