@@ -88,6 +88,6 @@ app.use( "/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 
 // start server
-app.listen(process.env.port || port, () => {
+app.listen(process.env.PORT || port, () => {
     console.log(`Nature-Spots started at port: ${port}`);
 })
