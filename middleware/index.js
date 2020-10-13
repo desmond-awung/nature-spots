@@ -1,6 +1,6 @@
 // all the middleware for our app goes here
 
-const Campground = require("../models/campground");
+const Adventure = require("../models/adventures");
 const Comment = require("../models/comment");
 
 let middlewareObj = {};
@@ -11,7 +11,7 @@ middlewareObj.checkCampgroundOwnership = function(req, res, next) {
     /// is user logged in?
     if(req.isAuthenticated()) {
         console.log("User logged in successfully");
-        Campground.findById(req.params.id, (err, foundCampground) => {
+        Adventure.findById(req.params.id, (err, foundCampground) => {
             if(err) {
                 console.log(err);
                 req.flash("error", "Campground not found in the database");

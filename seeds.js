@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Campground = require("./models/campground");
+const Adventure = require("./models/campground");
 const Comment = require("./models/comment");
 
 const allCamps = [
@@ -39,7 +39,7 @@ function seedDB() {
     });
 
     // remove all campgrounds
-    Campground.remove((err) => {
+    Adventure.remove((err) => {
         if(err) {
             console.log(err);
         } else {
@@ -55,7 +55,7 @@ function seedDB() {
 // add a few campgrounds
 function addCamgrounds() {
     allCamps.forEach ((seed) => {
-        Campground.create(seed, function(err, campground){
+        Adventure.create(seed, function(err, campground){
             if(err) {
                 console.log(err);
             } else {

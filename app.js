@@ -34,7 +34,7 @@ mongoose.set('useFindAndModify', false);
 
 // import DB models
 const User = require("./models/user");
-const Campground = require("./models/campground");
+const Adventure = require("./models/adventures");
 const Comment = require("./models/comment");
 
 // init express

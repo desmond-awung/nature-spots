@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
-// setup mongoose campground schema
-const campdgroundSchema = new mongoose.Schema({
+// setup mongoose adventure schema
+const adventureSchema = new mongoose.Schema({
     name: String,
     image: String,
     description: String,
@@ -15,13 +15,13 @@ const campdgroundSchema = new mongoose.Schema({
         username : String,
     },
 
-    // add object ID references to the comments for this campground
+    // add object ID references to the comments for this adventure
     comments : [
         {
             type : mongoose.Schema.Types.ObjectId,
-            ref : "Comment"     // name of th model
+            ref : "Comment"     // name of the model
         }
     ]
 });
 // compiles the schema into mongoose model
-module.exports = mongoose.model("Campground", campdgroundSchema);
+module.exports = mongoose.model("Adventure", adventureSchema);

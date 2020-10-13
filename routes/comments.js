@@ -10,7 +10,7 @@ const express = require("express");
 const router = express.Router({mergeParams : true});   
 
 // import DB models needed
-const Campground = require("../models/campground");
+const Adventure = require("../models/adventures");
 const Comment = require("../models/comment");
 const User = require("../models/user");
 // import middleware 
@@ -23,7 +23,7 @@ router.get("/new", middleware.isLoggedIn, (req, res) => {
     // res.send("This will be the NEW COMMENT form")
     // const campID = req.params.id; 
     // lookup campground using ID
-    Campground.findById(req.params.id, (err, foundCampground) => {
+    Adventure.findById(req.params.id, (err, foundCampground) => {
         if(err) {
             console.log(err);
         } else {
@@ -39,7 +39,7 @@ router.get("/new", middleware.isLoggedIn, (req, res) => {
 // contains middleware to check for user authentication
 router.post("/", middleware.isLoggedIn, (req, res) => {
     // 1. lookup campground using ID
-    Campground.findById(req.params.id, (err, foundCampground) => {
+    Adventure.findById(req.params.id, (err, foundCampground) => {
         if(err) {
             console.log(err);
             req.flash("error", "Campground not found in the database");
@@ -89,7 +89,7 @@ router.get("/:comment_id/edit", middleware.checkCommentOwnership, async(req, res
     // res.send(`EDIT ROUTE FOR COMMENT - ${req.params.comment_id}`);
     try {
         // get the campground, then find the comment
-        let foundCampground = await Campground.findById(req.params.id);
+        let foundCampground = await Adventure.findById(req.params.id);
         // console.log(foundCampground); for debug
         let foundComment = await Comment.findById(req.params.comment_id);
         console.log(`Editing Comment: ${foundCampground._id}`);

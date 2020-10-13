@@ -16,14 +16,12 @@ const router = express.Router();
 // import middleware 
 // if we require a directory, express automatically requires the content of index.js. So we don't need to write require("../middleware/index")
 const middleware = require("../middleware");
-const campground = require("../models/campground");
-
 
 // import index.js
 // const indexRouter = require("./index");
 
 // import DB models needed
-const Campground = require("../models/campground");
+const Adventure = require("../models/adventures");
 const Comment = require("../models/comment");
 // const { route } = require("./index");
 // const { update } = require("../models/campground");
@@ -33,7 +31,7 @@ const Comment = require("../models/comment");
 router.get("/", (req, res) => {                 // REST format
     // console.log(req.user);  // req.user the username and _id of the currently logged in user
     // get all capgrounds from db
-    Campground.find((err, allCampgrounds) => {
+    Adventure.find((err, allCampgrounds) => {
         if(err) {
             console.log(err);
         } else {
@@ -70,7 +68,7 @@ router.post("/", middleware.isLoggedIn, (req, res) => {                // REST f
     // };
     // console.log(newCampground);
     // create a new campground document and save to campgrounds collection in DB
-    Campground.create(newCampground, (err, newlyCreated) => {
+    Adventure.create(newCampground, (err, newlyCreated) => {
         if(err) {
             console.log(err);
             req.flash("error", `Error Creating Campground: ${newCampground.name}`)
@@ -99,7 +97,7 @@ router.get("/:id", (req, res) => {
     // find the campground with a specific id, which is passed from the <a> tag for this campground in the index page
     // we get req.params.id: from the xxxxx portion of the url: /campgrounds/xxxxx,
     // populate the comment data into foundCampground's _comments_ array 
-    Campground.findById(req.params.id).populate("comments").exec((err, foundCampground) => {
+    Adventure.findById(req.params.id).populate("comments").exec((err, foundCampground) => {
         if(err) {
             console.log(err);
         } else {
@@ -133,7 +131,7 @@ router.put("/:id", middleware.checkCampgroundOwnership, (req, res) => {
      *  we still need to do a query here, and there is no point in modifying the query which already works 
      */
 
-    Campground.findByIdAndUpdate(req.params.id, req.body.campground, (err, updatedCampground) => {
+    Adventure.findByIdAndUpdate(req.params.id, req.body.campground, (err, updatedCampground) => {
         if(err) {
             console.log(err);
             req.flash("error", `Error updating this campground`)
@@ -153,7 +151,7 @@ router.delete("/:id", middleware.checkCampgroundOwnership, (req, res) => {
     // res.send("You really want to delete...")
     // display the canpground name first..
     let campToDel_name;
-    Campground.findById(req.params.id, (err, campgroundToDelete) => {
+    Adventure.findById(req.params.id, (err, campgroundToDelete) => {
         if(err) {
             console.log(err);
             req.flash("error", `Error deleting this campground`)
@@ -164,7 +162,7 @@ router.delete("/:id", middleware.checkCampgroundOwnership, (req, res) => {
             console.log(`Campground to be deleted: ${campToDel_name}`);   // will use this for the "Are you sure you want to delete" pop-up      
             // .remove() is deprecated. Use deleteOne,deleteMany, or bulkWrite instead.
             // Campground.remove({_id : foundCampground._id}, (err, result) => {
-            Campground.deleteOne({_id : campgroundToDelete._id}, (err, result_camp) => {
+            Adventure.deleteOne({_id : campgroundToDelete._id}, (err, result_camp) => {
                 if(err) {
                     console.log(err);
                     console.log("campground could not be deleted");
