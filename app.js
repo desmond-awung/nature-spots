@@ -15,7 +15,7 @@ const   express     = require("express"),
         methodOverride = require("method-override")
  
 // requiring routes
-const campgroundRoutes  = require("./routes/campgrounds"),
+const adventureRoutes  = require("./routes/adventures"),
       commentRoutes     = require("./routes/comments"),
       indexRoutes       = require("./routes/index")
 
@@ -81,11 +81,11 @@ app.use(function(req, res, next){
 
 // import the routes to be used by the express app
 app.use(indexRoutes);
-// takes all the campgrounds routes and appends "/campgrounds" in front of them
-app.use( "/campgrounds", campgroundRoutes);
-// takes all the comment routes and appends "/campgrounds/:id/comments" in front of them.
+// takes all the adventures routes and appends "/adventures" in front of them
+app.use( "/adventures", adventureRoutes);
+// takes all the comment routes and appends "/adventures/:id/comments" in front of them.
 /// because of the id param in the url, we need  **  router = express.Router({mergeParams : true});  ** in routes/comments.js
-app.use("/campgrounds/:id/comments", commentRoutes);
+app.use("/adventures/:id/comments", commentRoutes);
 
 // start server
 app.listen(process.env.PORT || port, () => {

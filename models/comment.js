@@ -5,7 +5,7 @@ const commentSchema = new mongoose.Schema({
     // we store only the important User info in the comment
     author : {
         id : {
-            type : mongoose.Schema.Types.ObjectId,  // just like associating comments in the campgrounds model
+            type : mongoose.Schema.Types.ObjectId,  // just like associating comments in the adventures model
             ref : "User"
         },
         // including username here; more efficient than having to look it up every time

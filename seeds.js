@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Adventure = require("./models/campground");
+const Adventure = require("./models/adventure");
 const Comment = require("./models/comment");
 
 const allCamps = [
@@ -28,7 +28,7 @@ const allCamps = [
 ]
 
 function seedDB() {
-    // remove every document from the campgrounds and comments collections:
+    // remove every document from the adventures and comments collections:
     // remove all comments
     Comment.remove((err) => {
         if(err) {
@@ -38,38 +38,38 @@ function seedDB() {
         }
     });
 
-    // remove all campgrounds
+    // remove all adventures
     Adventure.remove((err) => {
         if(err) {
             console.log(err);
         } else {
             // do this only in case of no error above
-            console.log("removed all campgrounds!");
+            console.log("removed all adventures!");
             console.log("******************");
-            // add a few campgrounds + comments
+            // add a few adventures + comments
             addCamgrounds();
         }
     })
 }
 
-// add a few campgrounds
+// add a few adventures
 function addCamgrounds() {
     allCamps.forEach ((seed) => {
-        Adventure.create(seed, function(err, campground){
+        Adventure.create(seed, function(err, adventure){
             if(err) {
                 console.log(err);
             } else {
-                // console.log(`added a campground: ${campground.name}`);
-                console.log(`added a campground`);
-                // create comments only when the campground is successfully created
-                addComments(campground); 
+                // console.log(`added a adventure: ${adventure.name}`);
+                console.log(`added a adventure`);
+                // create comments only when the adventure is successfully created
+                addComments(adventure); 
             }
         })
     })
 }
 
 // add a comment
-function addComments(campground) {
+function addComments(adventure) {
     Comment.create(
         {
             content : "Most wild connection with nature, this place is definitely worth a second visit. Fresh breeze, cool winds, dancing river, singing hills, soothing sunsets what more can you ask for?",
@@ -79,14 +79,14 @@ function addComments(campground) {
                 console.log(err);
             } else {
                 console.log(`Comment Created`);
-                // associate this _comment_ to this _campground_
-                campground.comments.push(comment);
-                campground.save((err, camp) => {
+                // associate this _comment_ to this _adventure_
+                adventure.comments.push(comment);
+                adventure.save((err, camp) => {
                     if(err) {
                         console.log(err);
                     } else {
                         console.log("******************");
-                        console.log(`campground + comment saved:`);
+                        console.log(`adventure + comment saved:`);
                         // console.log(camp);
                     }
                 })

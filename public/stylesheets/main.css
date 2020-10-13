@@ -15,7 +15,7 @@
     padding: 0 0;
 }
 
-/* Delete button on the Campground Show template */
-#campround-delete-form, #comment-delete-form {
+/* Delete button on the Adventure Show template */
+#adventure-delete-form, #comment-delete-form {
     display: inline;
 }

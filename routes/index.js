@@ -41,11 +41,11 @@ router.post("/register", function(req, res){
                             req.flash("error", `${err.name}: ${err.message}`);
                             return res.redirect("/register");   // short-circuits the code below if error occurs
                         }
-                        // when the user successfully signs up, log the user in (.authenticate) and redirect to the campgrounds page
+                        // when the user successfully signs up, log the user in (.authenticate) and redirect to the adventures page
                         passport.authenticate("local")(req, res, function(){
                             console.log(`registration successful: ${user.username} logged in.`);
                             req.flash("success", `Welcome to Nature Spots, ${user.username}. Registration successful.`);
-                            res.redirect("/campgrounds");
+                            res.redirect("/adventures");
                         });                        
                     });
 });
@@ -61,7 +61,7 @@ router.get("/login", function(req, res){
 router.post(   "/login",
             passport.authenticate(  "local",
                                     {   // redirects object
-                                        successRedirect : "/campgrounds",
+                                        successRedirect : "/adventures",
                                         failureRedirect : "/login"
                                     }),         
             function(req, res){
@@ -75,7 +75,7 @@ router.get("/logout", function(req, res){
     req.logout();
     console.log(`user logged out successfully.`);
     req.flash("success", "Logged you out!");
-    res.redirect("/campgrounds");
+    res.redirect("/adventures");
 });
 
 

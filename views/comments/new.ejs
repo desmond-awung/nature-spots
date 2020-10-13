@@ -3,13 +3,13 @@
 
 
 <div class="container">
-    <h1 class="text-center"> Add a new Comment to <%= campground.name %> </h1> <!-- we could also do: <h1 style="text-align: center;" > same as BS3 class="text-center" -->
+    <h1 class="text-center"> Add a new Comment to <%= adventure.name %> </h1> <!-- we could also do: <h1 style="text-align: center;" > same as BS3 class="text-center" -->
     <div class="row">
         <!-- don't use grid here: <div class="col-xs-3"> this does not work! -->
         <div style="width: 30%; margin: 30px auto;">    
 
-            <!-- action: points to "/campgrounds/:id/comments", REST format -->
-            <form action = "/campgrounds/<%= campground._id %>/comments" method ="POST">
+            <!-- action: points to "/adventures/:id/comments", REST format -->
+            <form action = "/adventures/<%= adventure._id %>/comments" method ="POST">
 
                 <div class="form-group">    <!-- adds margin below the input elt-->
                     <!-- <input class="form-control" type="text" placeholder="start your comment" name ="comment[content]">  -->
@@ -24,7 +24,7 @@
             </form>
             
             <!-- BS3 makes it so easy to have <a> tags as buttons -->
-            <a class=" btn btn-default" href="/campgrounds"> See All Campgrounds </a>
+            <a class=" btn btn-default" href="/adventures"> See All Adventures </a>
         </div>
     </div>
 </div>

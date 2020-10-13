@@ -4,8 +4,8 @@
 
 const express = require("express");
 // since the comment routes are nested routes: for example the comment edit route will be:
-// campgrounds/:id/comments/:comment_id/edit
-// and we appended ** campgrounds/:id/comments ** to all the comment routes in this file in app.js, we need to merge the params from the campground and the comment together, so in the comment routes, we can access ":id" --> req.params.id, which gets us the campground id
+// adventures/:id/comments/:comment_id/edit
+// and we appended ** adventures/:id/comments ** to all the comment routes in this file in app.js, we need to merge the params from the adventure and the comment together, so in the comment routes, we can access ":id" --> req.params.id, which gets us the adventure id
 // we also rename the comment's id to comment_id, to avoid :id and :id from conflicting in the req object
 const router = express.Router({mergeParams : true});   
 
@@ -22,31 +22,31 @@ const middleware = require("../middleware");
 router.get("/new", middleware.isLoggedIn, (req, res) => {
     // res.send("This will be the NEW COMMENT form")
     // const campID = req.params.id; 
-    // lookup campground using ID
-    Adventure.findById(req.params.id, (err, foundCampground) => {
+    // lookup adventure using ID
+    Adventure.findById(req.params.id, (err, foundAdventure) => {
         if(err) {
             console.log(err);
         } else {
-            console.log(foundCampground);
-            // pass that campground to the comments/new template
-            res.render("comments/new", {campground : foundCampground})
+            console.log(foundAdventure);
+            // pass that adventure to the comments/new template
+            res.render("comments/new", {adventure : foundAdventure})
         }
     })
-    // res.render("comments/new", {campground : camp});
+    // res.render("comments/new", {adventure : camp});
 });
 
 // CREATE COMMENT
 // contains middleware to check for user authentication
 router.post("/", middleware.isLoggedIn, (req, res) => {
-    // 1. lookup campground using ID
-    Adventure.findById(req.params.id, (err, foundCampground) => {
+    // 1. lookup adventure using ID
+    Adventure.findById(req.params.id, (err, foundAdventure) => {
         if(err) {
             console.log(err);
-            req.flash("error", "Campground not found in the database");
-            res.redirect("/campgrounds");
+            req.flash("error", "Adventure not found in the database");
+            res.redirect("/adventures");
         } else {
-            console.log("Campground found: ");
-            // console.log(foundCampground);
+            console.log("Adventure found: ");
+            // console.log(foundAdventure);
             // 2. create new comment
             Comment.create(req.body.comment, (err, newComment) => {
                 if(err) {
@@ -64,17 +64,17 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
                     newComment.save();
                     console.log(newComment);
 
-                    // 4. associate comment to campground and save the campground
-                    foundCampground.comments.push(newComment);
-                    foundCampground.save((err, savedCampground) => {
+                    // 4. associate comment to adventure and save the adventure
+                    foundAdventure.comments.push(newComment);
+                    foundAdventure.save((err, savedAdventure) => {
                         if(err) {
                             console.log(err);
                         } else {
-                            console.log("campground + comment associated & saved:");
-                            // console.log(savedCampground);
+                            console.log("adventure + comment associated & saved:");
+                            // console.log(savedAdventure);
                             req.flash("success", `Comment Successfully Created.`)
-                            // 4. redirect to campground show route  
-                            res.redirect(`/campgrounds/${savedCampground._id}`);
+                            // 4. redirect to adventure show route  
+                            res.redirect(`/adventures/${savedAdventure._id}`);
                         }
                     }); // .save callback
                 }
@@ -88,17 +88,17 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
 router.get("/:comment_id/edit", middleware.checkCommentOwnership, async(req, res) => {
     // res.send(`EDIT ROUTE FOR COMMENT - ${req.params.comment_id}`);
     try {
-        // get the campground, then find the comment
-        let foundCampground = await Adventure.findById(req.params.id);
-        // console.log(foundCampground); for debug
+        // get the adventure, then find the comment
+        let foundAdventure = await Adventure.findById(req.params.id);
+        // console.log(foundAdventure); for debug
         let foundComment = await Comment.findById(req.params.comment_id);
-        console.log(`Editing Comment: ${foundCampground._id}`);
+        console.log(`Editing Comment: ${foundAdventure._id}`);
         // console.log(foundComment); for debug
-        res.render("comments/edit", {campground : foundCampground, comment : foundComment});   // relative to the views directory
+        res.render("comments/edit", {adventure : foundAdventure, comment : foundComment});   // relative to the views directory
         
     } catch (error) {
-        // catches error both in finding campground and in finding comment 
-        req.flash("error", `Error finding Campground/Commentin database.`)
+        // catches error both in finding adventure and in finding comment 
+        req.flash("error", `Error finding Adventure/Commentin database.`)
         console.log(error);
         res.redirect("back");
     }
@@ -108,13 +108,13 @@ router.get("/:comment_id/edit", middleware.checkCommentOwnership, async(req, res
 // COMMENT UPDATE
 router.put("/:comment_id", middleware.checkCommentOwnership, async(req, res) => {
     const commentId = req.params.comment_id;
-    const campgroundId = req.params.id;
+    const adventureId = req.params.id;
     try {
         // let updatedComment = await Comment.findByIdAndUpdate(commentId, req.body.comment)
         await Comment.findByIdAndUpdate(commentId, req.body.comment);
         console.log(`Comment was updated: ${commentId}`);
         req.flash("success", "Comment was successfully updated");
-        res.redirect(`/campgrounds/${campgroundId}`);       // redirect to this campground's show page
+        res.redirect(`/adventures/${adventureId}`);       // redirect to this adventure's show page
     } catch (error) {
         console.log(error);
         req.flash("error", `Error updating this comment`);
@@ -125,14 +125,14 @@ router.put("/:comment_id", middleware.checkCommentOwnership, async(req, res) => 
  // COMMENT DESTROY
  router.delete("/:comment_id", middleware.checkCommentOwnership, async(req, res) => {
     const commentId = req.params.comment_id;
-    const campgroundId = req.params.id;
+    const adventureId = req.params.id;
     console.log(`Comment to be deleted: ${commentId}`);
     
     try {
         await Comment.findByIdAndDelete(commentId);
         console.log(`Comment deleted: ${commentId}`);
         req.flash("success", "Comment deleted successfully")
-        res.redirect(`/campgrounds/${campgroundId}`);       // redirect to campgrounds show page
+        res.redirect(`/adventures/${adventureId}`);       // redirect to adventures show page
     } catch (error) {
         console.log(error);
         req.flash("error", `Error deleting this comment`);
