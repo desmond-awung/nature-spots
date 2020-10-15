@@ -16,7 +16,7 @@ const   express     = require("express"),
  
 // requiring routes
 const adventureRoutes  = require("./routes/adventures"),
-      commentRoutes     = require("./routes/comments"),
+      reviewRoutes     = require("./routes/reviews"),
       indexRoutes       = require("./routes/index")
 
 // init mongoose for MongoDB
@@ -34,8 +34,8 @@ mongoose.set('useFindAndModify', false);
 
 // import DB models
 const User = require("./models/user");
-const Adventure = require("./models/adventures");
-const Comment = require("./models/comment");
+const Adventure = require("./models/adventure");
+const Review = require("./models/review");
 
 // init express
 app.set("view engine", "ejs");  // skip all .ejs file extensions in routes
@@ -83,9 +83,9 @@ app.use(function(req, res, next){
 app.use(indexRoutes);
 // takes all the adventures routes and appends "/adventures" in front of them
 app.use( "/adventures", adventureRoutes);
-// takes all the comment routes and appends "/adventures/:id/comments" in front of them.
-/// because of the id param in the url, we need  **  router = express.Router({mergeParams : true});  ** in routes/comments.js
-app.use("/adventures/:id/comments", commentRoutes);
+// takes all the review routes and appends "/adventures/:id/reviews" in front of them.
+/// because of the id param in the url, we need  **  router = express.Router({mergeParams : true});  ** in routes/reviews.js
+app.use("/adventures/:id/reviews", reviewRoutes);
 
 // start server
 app.listen(process.env.PORT || port, () => {

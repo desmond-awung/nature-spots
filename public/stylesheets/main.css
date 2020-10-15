@@ -1,7 +1,7 @@
 
 /* affects the caption-full class in the showw template  */
 .thumbnail .caption-full {
-/* div.show-camp-info  { */
+/* div.show-adventure-info  { */
     padding: 1.5em 1.5em;
 }
 
@@ -16,6 +16,6 @@
 }
 
 /* Delete button on the Adventure Show template */
-#adventure-delete-form, #comment-delete-form {
+#adventure-delete-form, #review-delete-form {
     display: inline;
 }

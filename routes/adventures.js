@@ -21,8 +21,8 @@ const middleware = require("../middleware");
 // const indexRouter = require("./index");
 
 // import DB models needed
-const Adventure = require("../models/adventures");
-const Comment = require("../models/comment");
+const Adventure = require("../models/adventure");
+const Review = require("../models/review");
 // const { route } = require("./index");
 // const { update } = require("../models/adventure");
 
@@ -96,8 +96,8 @@ router.get("/new", middleware.isLoggedIn, (req, res) => {                 // RES
 router.get("/:id", (req, res) => {
     // find the adventure with a specific id, which is passed from the <a> tag for this adventure in the index page
     // we get req.params.id: from the xxxxx portion of the url: /adventures/xxxxx,
-    // populate the comment data into foundAdventure's _comments_ array 
-    Adventure.findById(req.params.id).populate("comments").exec((err, foundAdventure) => {
+    // populate the review data into foundAdventure's _reviews_ array 
+    Adventure.findById(req.params.id).populate("reviews").exec((err, foundAdventure) => {
         if(err) {
             console.log(err);
         } else {
@@ -168,22 +168,22 @@ router.delete("/:id", middleware.checkAdventureOwnership, (req, res) => {
                     console.log("adventure could not be deleted");
                     res.redirect("/adventures");
                 } else {
-                    // delete all comments associated with this adventure from DB
-                    Comment.deleteMany({_id : {$in : adventureToDelete.comments}}, (err, result_comment) => {
+                    // delete all reviews associated with this adventure from DB
+                    Review.deleteMany({_id : {$in : adventureToDelete.reviews}}, (err, result_review) => {
                         if(err) {
-                            console.log("This Adventure's comments could not be deleted");
+                            console.log("This Adventure's reviews could not be deleted");
                             console.log(err);
                             res.redirect("/adventures");   // redirect to the index page
                         } else {
-                            console.log("Comments deletion info:");
-                            console.log(result_comment);
+                            console.log("Reviews deletion info:");
+                            console.log(result_review);
                         }
                     });
                     // code reaches here if successfully deleted
-                    console.log(`Adventure successfully deleted: ${campToDel_name}, with all associated comments.`);            
+                    console.log(`Adventure successfully deleted: ${campToDel_name}, with all associated reviews.`);            
                     console.log("Campgrrounds deletions info:");
                     console.log(result_camp);    // displays object with details on what was deleted
-                    req.flash("success", `Adventure successfully deleted: ${campToDel_name}, with all associated comments.`)
+                    req.flash("success", `Adventure successfully deleted: ${campToDel_name}, with all associated reviews.`)
                     res.redirect("/adventures");   // redirect to the index page
                 }
             });

@@ -15,11 +15,11 @@ const adventureSchema = new mongoose.Schema({
         username : String,
     },
 
-    // add object ID references to the comments for this adventure
-    comments : [
+    // add object ID references to the reviews for this adventure
+    reviews : [
         {
             type : mongoose.Schema.Types.ObjectId,
-            ref : "Comment"     // name of the model
+            ref : "Review"     // name of the model
         }
     ]
 });

@@ -1,7 +1,7 @@
 // all the middleware for our app goes here
 
-const Adventure = require("../models/adventures");
-const Comment = require("../models/comment");
+const Adventure = require("../models/adventure");
+const Review = require("../models/review");
 
 let middlewareObj = {};
 
@@ -56,25 +56,25 @@ middlewareObj.checkAdventureOwnership = function(req, res, next) {
     }
 }   // end of checkAdventureOwnership
 
-// middleware to check for authorization for comment edit, update and destroy routes
-// make sure user can only edit/delete comments that they created.
-middlewareObj.checkCommentOwnership = async function(req, res, next) {
+// middleware to check for authorization for review edit, update and destroy routes
+// make sure user can only edit/delete reviews that they created.
+middlewareObj.checkReviewOwnership = async function(req, res, next) {
     if(req.isAuthenticated()) {
         try {
-            let foundComment = await Comment.findById(req.params.comment_id);
-            if(foundComment.author.id.equals(req.user._id)) {
+            let foundReview = await Review.findById(req.params.review_id);
+            if(foundReview.author.id.equals(req.user._id)) {
                 console.log("User is Authorized to do this action.");
                 next();
             } else {
                 console.log("AUTHORIZATION ERROR");
-                console.log(`You - ${req.user.username} -  do not have permissions to edit/delete since you don't own this comment. Comment is owned by ${foundComment.author.username}`);
+                console.log(`You - ${req.user.username} -  do not have permissions to edit/delete since you don't own this review. Review is owned by ${foundReview.author.username}`);
                 req.flash("error", "Authorization Error. You don't have permission to do that.");
                 res.redirect("back");
             }
 
         } catch (error) {
             // error from promise reject - findById error - DB error. We'll hardly ever see this if server is up and running
-            req.flash("error", "Comment not found in the database");
+            req.flash("error", "Review not found in the database");
             console.log(error);
             res.redirect("back");   // take the user back to previous page they were on
         }
@@ -87,7 +87,7 @@ middlewareObj.checkCommentOwnership = async function(req, res, next) {
         req.flash("error", "You need to be logged in to do that.");
         res.redirect("back");   // take the user back to previous page they were on
     }
-}   // end of checkCommentOwnership
+}   // end of checkReviewOwnership
 
 // middleware to implement authentication - checks if a user is logged in
 middlewareObj.isLoggedIn = function(req, res, next) {

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Adventure = require("./models/adventure");
-const Comment = require("./models/comment");
+const Review = require("./models/review");
 
 const allCamps = [
     { 
@@ -28,13 +28,13 @@ const allCamps = [
 ]
 
 function seedDB() {
-    // remove every document from the adventures and comments collections:
-    // remove all comments
-    Comment.remove((err) => {
+    // remove every document from the adventures and reviews collections:
+    // remove all reviews
+    Review.remove((err) => {
         if(err) {
             console.log(err);
         } else {
-            console.log("removed all comments");
+            console.log("removed all reviews");
         }
     });
 
@@ -46,7 +46,7 @@ function seedDB() {
             // do this only in case of no error above
             console.log("removed all adventures!");
             console.log("******************");
-            // add a few adventures + comments
+            // add a few adventures + reviews
             addCamgrounds();
         }
     })
@@ -61,32 +61,32 @@ function addCamgrounds() {
             } else {
                 // console.log(`added a adventure: ${adventure.name}`);
                 console.log(`added a adventure`);
-                // create comments only when the adventure is successfully created
-                addComments(adventure); 
+                // create reviews only when the adventure is successfully created
+                addReviews(adventure); 
             }
         })
     })
 }
 
-// add a comment
-function addComments(adventure) {
-    Comment.create(
+// add a review
+function addReviews(adventure) {
+    Review.create(
         {
             content : "Most wild connection with nature, this place is definitely worth a second visit. Fresh breeze, cool winds, dancing river, singing hills, soothing sunsets what more can you ask for?",
             author : "Rainbow Sparks",
-        }, (err, comment) => {
+        }, (err, review) => {
             if(err) {
                 console.log(err);
             } else {
-                console.log(`Comment Created`);
-                // associate this _comment_ to this _adventure_
-                adventure.comments.push(comment);
+                console.log(`Review Created`);
+                // associate this _review_ to this _adventure_
+                adventure.reviews.push(review);
                 adventure.save((err, camp) => {
                     if(err) {
                         console.log(err);
                     } else {
                         console.log("******************");
-                        console.log(`adventure + comment saved:`);
+                        console.log(`adventure + review saved:`);
                         // console.log(camp);
                     }
                 })

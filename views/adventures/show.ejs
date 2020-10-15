@@ -27,7 +27,7 @@
     
                 <img class="img-responsive" src="<%= adventure.image  %> " alt="image of the <%= adventure.name %> ">
 
-                <div class="caption-full show-camp-info">
+                <div class="caption-full show-adventure-info">
                     <h4 class="pull-right"> $<%= adventure.price %>/night </h4>   <!-- inline element that aligns to the right -->
                     <h4> 
                         <a href="#"><%= adventure.name %> </a>
@@ -39,7 +39,7 @@
                         </em> 
                     </p>
 
-                    <!-- display the Edit and Delete Campgrround buttons only if the logged in user owns the current adventure on this show page -->
+                    <!-- display the Edit and Delete adventure buttons only if the logged in user owns the current adventure on this show page -->
                     <!-- res.locals.currentUser in app.js gives us access to the req.user -->
                     <!-- make sure to first verify that currentUser is not undefined - in case there is no one logged in -->
                     <% if (currentUser && adventure.author.id.equals(currentUser._id)) { %>
@@ -48,7 +48,7 @@
                         <a class="btn btn-sm btn-warning" href="/adventures/<%= adventure._id %>/edit"> Edit </a>
                     
                         <!-- form to delete this route -->
-                        <form id="campround-delete-form" action="/adventures/<%= adventure._id %>?_method=DELETE" method="POST">
+                        <form id="adventure-delete-form" action="/adventures/<%= adventure._id %>?_method=DELETE" method="POST">
                            <button class="btn btn-sm btn-danger"> Delete </button>
                         </form>
                     <% } %>
@@ -60,33 +60,33 @@
 
             <div class="well">  <!-- gives us nice inset grey backgroun-->
                 <div class="text-right">    <!-- BLOCK element that aligns to the right -->
-                    <a class="btn btn-success" href="/adventures/<%= adventure._id %>/comments/new"> Add New Comment </a>
+                    <a class="btn btn-success" href="/adventures/<%= adventure._id %>/reviews/new"> Add New Review </a>
                 </div>
                 <hr>
     
-                <!-- <h4>Comments</h4> -->
+                <!-- <h4>Reviews</h4> -->
     
-                <% adventure.comments.forEach(comment => { %>
+                <% adventure.reviews.forEach(review => { %>
 
                     <div class="row">
                         <div class="col-md-12">
-                            <strong><%= comment.author.username %></strong>
+                            <strong><%= review.author.username %></strong>
                             <span class="pull-right"> 10 days ago </span>
                             <p>
-                                <%= comment.content %>
+                                <%= review.content %>
                             </p>
 
-                            <!-- display the Edit and Delete Comment buttons only if the logged in user owns the current comment on this show page -->
+                            <!-- display the Edit and Delete Review buttons only if the logged in user owns the current review on this show page -->
                             <!-- res.locals.currentUser in app.js gives us access to the req.user -->
                             <!-- make sure to first verify that currentUser is not undefined - in case there is no one logged in -->
-                            <% if (currentUser && comment.author.id.equals(currentUser._id)) { %>
+                            <% if (currentUser && review.author.id.equals(currentUser._id)) { %>
                              
-                                <!-- link to form template to edit the comment: /adventures/:id/comments/:comment_id/edit -->
+                                <!-- link to form template to edit the review: /adventures/:id/reviews/:review_id/edit -->
                                 <a class="btn btn-xs btn-warning" 
-                                href="/adventures/<%= adventure._id %>/comments/<%= comment._id %>/edit">Edit</a>
+                                href="/adventures/<%= adventure._id %>/reviews/<%= review._id %>/edit">Edit</a>
                                 
                                 <!-- form to delete the form - using method override -->
-                                <form id="comment-delete-form" action="/adventures/<%= adventure._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                                <form id="review-delete-form" action="/adventures/<%= adventure._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
                                     <input class="btn btn-xs btn-danger" type="submit" value="Delete">
                                 </form>
 
