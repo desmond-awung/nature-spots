@@ -14,13 +14,13 @@
             <h1>Welcome to Nature Spots</h1>
             <p>View our amazing adventures from all over Austin, TX</p>
             <p>
-                <!-- Link to add a new campgroud -->
+                <!-- Link to add a new adventure -->
                 <a class="btn btn-primary btn-lg" href="/adventures/new">Add a new adventure</a>
             </p>
         </div>
     </header>
     
-    <!-- grid for all camps -->
+    <!-- grid for all adventures -->
     <div class="row">
         <div class="col-lg-12">
             <h3>Our most Popular Adventures</h3>
@@ -30,13 +30,13 @@
 
     <div class="row" style="display:flex; flex-wrap: wrap;">
 
-        <!-- loop through array camps and display each adventure's info -->
-        <% camps.forEach(adventure => { %>
+        <!-- loop through array adventures and display each adventure's info -->
+        <% adventures.forEach(adventure => { %>
             <div class="col-md-3 col-sm-6"> <!-- adds responsiveness-->
                 <div class="thumbnail">
                     <!-- We need " " quotes around the src attribute, not just empty text, which ejs passes along. We don't want src=http://...  -->
                     <!-- looks kinda weird right? -->
-                    <img src="<%= adventure.image %>" alt="camp image"> 
+                    <img src="<%= adventure.image %>" alt="adventure image"> 
                     <div class="caption">
                         <h4 class="text-center"> <%= adventure.name  %> </h4>
                     </div>

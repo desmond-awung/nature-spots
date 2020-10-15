@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Adventure = require("./models/adventure");
 const Review = require("./models/review");
 
-const allCamps = [
+const allAdventures = [
     { 
         name : "Cloud's Rest", 
         image : "https://images.unsplash.com/photo-1573111651692-39ec7f38fec9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
@@ -54,7 +54,7 @@ function seedDB() {
 
 // add a few adventures
 function addCamgrounds() {
-    allCamps.forEach ((seed) => {
+    allAdventures.forEach ((seed) => {
         Adventure.create(seed, function(err, adventure){
             if(err) {
                 console.log(err);
@@ -81,13 +81,13 @@ function addReviews(adventure) {
                 console.log(`Review Created`);
                 // associate this _review_ to this _adventure_
                 adventure.reviews.push(review);
-                adventure.save((err, camp) => {
+                adventure.save((err, adventure) => {
                     if(err) {
                         console.log(err);
                     } else {
                         console.log("******************");
                         console.log(`adventure + review saved:`);
-                        // console.log(camp);
+                        // console.log(adventure);
                     }
                 })
             }

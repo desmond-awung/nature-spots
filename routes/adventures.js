@@ -36,7 +36,7 @@ router.get("/", (req, res) => {                 // REST format
             console.log(err);
         } else {
             // allAdventures contains a list/array of all objects corresponding to the documents from the db
-            res.render("adventures/index", {camps : allAdventures })
+            res.render("adventures/index", {adventures : allAdventures })
             // console.log((allAdventures));
         }
     });
@@ -54,16 +54,16 @@ router.post("/", middleware.isLoggedIn, (req, res) => {                // REST f
     let newAdventure = req.body.adventure;
     newAdventure.author = author;
     console.log(newAdventure);
-    // const campName = req.body.camp_name;
-    // const campImgUrl = req.body.image_url;
-    // const campDescription = req.body.description;
+    // const adventureName = req.body.adventure_name;
+    // const adventureImgUrl = req.body.image_url;
+    // const adventureDescription = req.body.description;
     // console.log(req.user);
     
     // const newAdventure = {
-    //     name : campName,
-    //     image : campImgUrl,
+    //     name : adventureName,
+    //     image : adventureImgUrl,
     //     price : price,
-    //     description : campDescription,
+    //     description : adventureDescription,
     //     author : author
     // };
     // console.log(newAdventure);
@@ -150,7 +150,7 @@ router.put("/:id", middleware.checkAdventureOwnership, (req, res) => {
 router.delete("/:id", middleware.checkAdventureOwnership, (req, res) => {
     // res.send("You really want to delete...")
     // display the canpground name first..
-    let campToDel_name;
+    let adventureToDel_name;
     Adventure.findById(req.params.id, (err, adventureToDelete) => {
         if(err) {
             console.log(err);
@@ -158,11 +158,11 @@ router.delete("/:id", middleware.checkAdventureOwnership, (req, res) => {
             res.redirect("/adventures");   // redirect to the index page
         } else {
             // console.log(foundAdventure);
-            campToDel_name = adventureToDelete.name; 
-            console.log(`Adventure to be deleted: ${campToDel_name}`);   // will use this for the "Are you sure you want to delete" pop-up      
+            adventureToDel_name = adventureToDelete.name; 
+            console.log(`Adventure to be deleted: ${adventureToDel_name}`);   // will use this for the "Are you sure you want to delete" pop-up      
             // .remove() is deprecated. Use deleteOne,deleteMany, or bulkWrite instead.
             // Adventure.remove({_id : foundAdventure._id}, (err, result) => {
-            Adventure.deleteOne({_id : adventureToDelete._id}, (err, result_camp) => {
+            Adventure.deleteOne({_id : adventureToDelete._id}, (err, result_adventure) => {
                 if(err) {
                     console.log(err);
                     console.log("adventure could not be deleted");
@@ -180,10 +180,10 @@ router.delete("/:id", middleware.checkAdventureOwnership, (req, res) => {
                         }
                     });
                     // code reaches here if successfully deleted
-                    console.log(`Adventure successfully deleted: ${campToDel_name}, with all associated reviews.`);            
-                    console.log("Campgrrounds deletions info:");
-                    console.log(result_camp);    // displays object with details on what was deleted
-                    req.flash("success", `Adventure successfully deleted: ${campToDel_name}, with all associated reviews.`)
+                    console.log(`Adventure successfully deleted: ${adventureToDel_name}, with all associated reviews.`);            
+                    console.log("Adventuregrrounds deletions info:");
+                    console.log(result_adventure);    // displays object with details on what was deleted
+                    req.flash("success", `Adventure successfully deleted: ${adventureToDel_name}, with all associated reviews.`)
                     res.redirect("/adventures");   // redirect to the index page
                 }
             });
@@ -196,7 +196,7 @@ router.delete("/:id", middleware.checkAdventureOwnership, (req, res) => {
     //         console.log(err);
     //         res.redirect("/adventures");   // redirect to the index page
     //     } else {
-    //         console.log(`Adventure successfully deleted: ${camp_name}`);
+    //         console.log(`Adventure successfully deleted: ${adventure_name}`);
     //         res.redirect("/adventures");   // redirect to the index page
     //     }
 
