@@ -19,3 +19,7 @@
 #adventure-delete-form, #review-delete-form {
     display: inline;
 }
+
+.all-forms {
+    margin-top: 2rem;
+}

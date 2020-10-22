@@ -3,11 +3,13 @@
 <%- include("../partials/header")%>
 
 
-<div class="container">
-    <h1 class="text-center"> Edit <%= adventure.name %> </h1> <!-- we could also do: <h1 style="text-align: center;" > same as BS3 class="text-center" -->
-    <div class="row">
-        <!-- don't use grid here: <div class="col-xs-3"> this does not work! -->
-        <div style="width: 30%; margin: 30px auto;">    
+<h1 class="text-center"> Edit <%= adventure.name %> </h1> <!-- we could also do: <h1 style="text-align: center;" > same as BS3 class="text-center" -->
+<div class="row all-forms">
+    <!-- don't use grid here: <div class="col-xs-3"> this does not work! -->
+    <div class="col-xs-2 col-sm-3 col-md-4"></div>
+
+    <div class="col-xs-8 col-sm-6 col-md-4">
+        <div class="all-forms">    
 
             <!-- action: points to "/adventures", REST format -->
             <form action = "/adventures/<%= adventure._id %>?_method=PUT" method ="POST">
@@ -41,9 +43,12 @@
             </form>
             
             <!-- BS3 makes it so easy to have <a> tags as buttons -->
-            <a class=" btn btn-default" href="/adventures"> See All adventures </a>
+            <a class="center-block btn btn-default" href="/adventures"> See All adventures </a>
         </div>
     </div>
+
+    <div class="col-xs-2 col-sm-3 col-md-4"></div>
+
 </div>
 
 

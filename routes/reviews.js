@@ -21,7 +21,7 @@ const middleware = require("../middleware");
 // contains middleware to check for user authentication
 router.get("/new", middleware.isLoggedIn, (req, res) => {
     // res.send("This will be the NEW REVIEW form")
-    // const campID = req.params.id; 
+    // const adventureID = req.params.id; 
     // lookup adventure using ID
     Adventure.findById(req.params.id, (err, foundAdventure) => {
         if(err) {
@@ -32,7 +32,7 @@ router.get("/new", middleware.isLoggedIn, (req, res) => {
             res.render("reviews/new", {adventure : foundAdventure})
         }
     })
-    // res.render("reviews/new", {adventure : camp});
+    // res.render("reviews/new", {adventure : adventure});
 });
 
 // CREATE REVIEW

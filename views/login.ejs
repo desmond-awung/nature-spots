@@ -3,16 +3,23 @@
 <!-- be sure to respect file paths to the header and footer templates  -->
 <%- include("./partials/header") %>      
 
-<h1>Log in!</h1>
 
-<form action="/login" method="POST">
-    <label for="">Username: </label>
-    <input type="text" name="username" placeholder="username">
+    <h1 class="text-center">Log in</h1>
 
-    <label for="password">Password: </label>
-    <input type="password" name="password">
-
-    <input type="submit" value="Log In">
-</form>
+    <div class="all-forms">
+        <form action="/login" method="POST">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" name="username" placeholder="username">
+            </div>
+        
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password">
+            </div>
+        
+            <input class="center-block btn btn-lg btn-primary" type="submit" value="Log In">
+        </form>
+    </div>
 
 <%- include("./partials/footer") %>
